@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:amazon="http://schemas.amazon.com/apk/res/android"
-    package="com.kinesis.flutter_adm">
+    package="com.kinesis.flutter_amazon_adm">
 
     <!-- Permisos necesarios para ADM -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +21,7 @@
         <activity
             android:name=".FlutterAmazonAdmPlugin"
             android:exported="false" />
-            
+
         <!-- Habilitar ADM -->
         <amazon:enable-feature
             android:name="com.amazon.device.messaging"

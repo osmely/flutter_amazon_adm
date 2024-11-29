@@ -1,4 +1,4 @@
-group 'com.kinesis.flutter_adm'
+group 'com.kinesis.flutter_amazon_adm'
 version '1.0'
 
 buildscript {
@@ -35,7 +35,7 @@ android {
         
         // Configuración del plugin
         manifestPlaceholders = [
-            'applicationId': 'com.kinesis.flutter_adm'
+            'applicationId': 'com.kinesis.flutter_amazon_adm'
         ]
     }
 

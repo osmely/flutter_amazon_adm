@@ -1,4 +1,4 @@
-package com.kinesis.flutter_adm;
+package com.kinesis.flutter_amazon_adm;
 
 import android.app.ActivityManager;
 import android.app.NotificationChannel;
