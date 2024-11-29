@@ -7,32 +7,48 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
 
-    <!-- Permiso personalizado para recibir mensajes ADM -->
+    <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
+    
     <permission
-        android:name="${applicationId}.permission.RECEIVE_ADM_MESSAGE"
+        android:name="com.kinesis.flutter_adm.permission.RECEIVE_ADM_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="${applicationId}.permission.RECEIVE_ADM_MESSAGE" />
-    <uses-permission android:name="android.permission.BIND_JOB_SERVICE" />
+
+
 
     <application>
 
-    <!-- Clase principal del plugin -->
+
+        <service android:name=".AdmMessageHandler"
+            android:exported="false"/>
+        
+        <service
+            android:name=".AdmMessageHandlerJob"
+            android:exported="false" />
+        
+        <amazon:enable-feature android:name="com.amazon.device.messaging"
+            android:required="false" />
+
         <activity
             android:name=".FlutterAmazonAdmPlugin"
             android:exported="false" />
 
-        <!-- Habilitar ADM -->
-        <amazon:enable-feature
-            android:name="com.amazon.device.messaging"
-            android:required="false" />
 
-        <!-- ADM Message Handler Service -->
-        <service
-            android:name=".AdmMessageHandler"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false" />
+        <receiver
+            android:name=".AdmMessageReceiver"
+            android:exported="true"
+            android:permission="com.amazon.device.messaging.permission.SEND">
+            <intent-filter>
+                <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
+                <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
+
+
 
         <!-- Actividad para manejar notificaciones -->
         <activity
@@ -48,18 +64,7 @@
                 android:resource="@style/NormalTheme" />
         </activity>
 
-        <!-- ADM Message Handler Receiver -->
-        <receiver
-            android:name=".AdmMessageReceiver"
-            android:exported="true"
-            android:permission="com.amazon.device.messaging.permission.SEND">
-            
-            <intent-filter>
-                <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
-                <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
+
 
         <!-- Metadatos necesarios -->
         <meta-data
