@@ -45,10 +45,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
 
     @Override
     protected void onUnregistered(final Context context, final String registrationId){
-        Log.d(TAG, "Device unregistered with ID: " + registrationId);
-        if (channel != null) {
-            channel.invokeMethod("onUnregistered", registrationId);
-        }
+        Log.d(TAG, "Device unregistered");
     }
 
     @Override
