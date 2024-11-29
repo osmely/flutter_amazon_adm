@@ -53,6 +53,9 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+
+        Log.d("onMethodCall", ":::: -> " + call.method);
+        
         switch (call.method) {
             case "initialize":
                 initialize(result);
