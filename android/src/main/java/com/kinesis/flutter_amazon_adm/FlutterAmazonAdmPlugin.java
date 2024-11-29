@@ -17,7 +17,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import android.util.Log;
 
-
+/**
+ * FlutterAmazonAdmPlugin
+ */
 public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private static MethodChannel methodChannel;
     private static String pendingNotificationMessage;
@@ -46,7 +48,7 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
         channel.setMethodCallHandler(this);
         FlutterAmazonAdmPlugin.context = flutterPluginBinding.getApplicationContext();
         adm = new ADM(FlutterAmazonAdmPlugin.context);
-        AdmMessageHandler.setChannel(channel);
+        AdmMessageHandlerJob.setChannel(methodChannel);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
         methodChannel = null;
-        AdmMessageHandler.setChannel(null);
+        AdmMessageHandlerJob.setChannel(null);
     }
 
     @Override
