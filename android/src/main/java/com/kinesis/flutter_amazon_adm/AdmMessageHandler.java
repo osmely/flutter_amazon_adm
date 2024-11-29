@@ -36,7 +36,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onRegistered(final Context context, final String registrationId) {
+    protected void onRegistered(final String registrationId) {
         Log.d(TAG, "Device registered: " + registrationId);
         if (channel != null) {
             channel.invokeMethod("onRegistrationId", registrationId);
@@ -44,7 +44,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onUnregistered(final Context context) {
+    protected void onUnregistered(final String registrationId) {
         Log.d(TAG, "Device unregistered");
         if (channel != null) {
             channel.invokeMethod("onUnregistered", null);
@@ -52,7 +52,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onMessage(final Context context, final Intent intent) {
+    protected void onMessage(final Intent intent) {
         Log.d(TAG, "Message received");
         
         if (intent.getExtras() != null) {
