@@ -27,7 +27,7 @@ public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     private static MethodChannel channel;
 
     public AdmMessageHandler() {
-        super("AdmMessageHandler");
+        super();
     }
 
     public static void setChannel(MethodChannel methodChannel) {
@@ -35,8 +35,8 @@ public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     }
 
     @Override
-    protected void onJobMessage(Intent intent, int jobId) {
-        Log.d(TAG, "Message received with jobId: " + jobId);
+    protected void onMessage(final Context context, final Intent intent) {
+        Log.d(TAG, "Message received");
         
         if (intent.getExtras() != null) {
             Map<String, Object> message = new HashMap<>();
@@ -60,7 +60,7 @@ public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     }
 
     @Override
-    protected void onJobRegistered(String registrationId, int jobId) {
+    protected void onRegistered(final Context context, final String registrationId) {
         Log.d(TAG, "Device registered with ID: " + registrationId);
         if (channel != null) {
             channel.invokeMethod("onRegistered", registrationId);
@@ -68,7 +68,7 @@ public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     }
 
     @Override
-    protected void onJobUnregistered(String registrationId, int jobId) {
+    protected void onUnregistered(final Context context, final String registrationId) {
         Log.d(TAG, "Device unregistered with ID: " + registrationId);
         if (channel != null) {
             channel.invokeMethod("onUnregistered", registrationId);
@@ -76,10 +76,10 @@ public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     }
 
     @Override
-    protected void onJobRegistrationError(String error, int jobId) {
-        Log.e(TAG, "Registration error: " + error);
+    protected void onRegistrationError(final Context context, final String string) {
+        Log.e(TAG, "Registration error: " + string);
         if (channel != null) {
-            channel.invokeMethod("onRegistrationError", error);
+            channel.invokeMethod("onRegistrationError", string);
         }
     }
 
