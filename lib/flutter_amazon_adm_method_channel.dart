@@ -27,8 +27,10 @@ class MethodChannelFlutterAmazonAdm extends FlutterAmazonAdmPlatform {
     required Function(String) onRegistrationId,
   }) async {
     methodChannel.setMethodCallHandler((MethodCall call) async {
+
+      print('call.method: ${call.method}');
+      
       switch (call.method) {
-        print('call.method: ${call.method}');
         case 'onMessage':
           final Map<String, dynamic> message = Map<String, dynamic>.from(call.arguments);
           onMessage(message);
