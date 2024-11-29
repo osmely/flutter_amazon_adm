@@ -55,7 +55,7 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
 
         Log.d("onMethodCall", ":::: -> " + call.method);
-        
+
         switch (call.method) {
             case "initialize":
                 initialize(result);
@@ -88,6 +88,8 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
                 channel.invokeMethod("onMessageOpenedApp", jsonToMap(jsonMessage));
                 pendingNotificationMessage = null;
             }
+
+            adm.startRegister();
 
             result.success(null);
         } catch (Exception e) {
