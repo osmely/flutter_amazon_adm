@@ -37,4 +37,8 @@ abstract class FlutterAmazonAdmPlatform extends PlatformInterface {
   }) {
     throw UnimplementedError('initialize() has not been implemented.');
   }
+
+  Future<void> startUnregister() {
+    throw UnimplementedError('startUnregister() has not been implemented.');
+  }
 }

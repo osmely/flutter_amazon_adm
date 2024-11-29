@@ -45,4 +45,9 @@ class MethodChannelFlutterAmazonAdm extends FlutterAmazonAdmPlatform {
 
     await methodChannel.invokeMethod<void>('initialize');
   }
+
+  @override
+  Future<void> startUnregister() async {
+    await methodChannel.invokeMethod('startUnregister');
+  }
 }

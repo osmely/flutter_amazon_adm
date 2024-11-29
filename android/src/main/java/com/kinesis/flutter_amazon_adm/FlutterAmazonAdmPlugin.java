@@ -51,45 +51,65 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "initialize":
-                try {
-                    if (!adm.isSupported()) {
-                        result.error("ADM_NOT_SUPPORTED", "Amazon Device Messaging is not supported on this device", null);
-                        return;
-                    }
-
-                    // Check for pending notification message
-                    if (pendingNotificationMessage != null) {
-                        JSONObject jsonMessage = new JSONObject(pendingNotificationMessage);
-                        channel.invokeMethod("onMessageOpenedApp", jsonToMap(jsonMessage));
-                        pendingNotificationMessage = null;
-                    }
-
-                    result.success(null);
-                } catch (Exception e) {
-                    result.error("INIT_ERROR", "Error initializing ADM: " + e.getMessage(), null);
-                }
+                initialize(result);
                 break;
-
             case "isSupported":
-                try {
-                    result.success(adm.isSupported());
-                } catch (Exception e) {
-                    result.error("SUPPORT_CHECK_ERROR", "Error checking ADM support: " + e.getMessage(), null);
-                }
+                result.success(isSupported());
                 break;
-
             case "getAdmRegistrationId":
-                try {
-                    String registrationId = adm.getRegistrationId();
-                    result.success(registrationId);
-                } catch (Exception e) {
-                    result.error("REG_ID_ERROR", "Error getting registration ID: " + e.getMessage(), null);
-                }
+                result.success(getAdmRegistrationId());
                 break;
-
+            case "startUnregister":
+                startUnregister(result);
+                break;
             default:
                 result.notImplemented();
                 break;
+        }
+    }
+
+    private void initialize(Result result) {
+        try {
+            if (!adm.isSupported()) {
+                result.error("ADM_NOT_SUPPORTED", "Amazon Device Messaging is not supported on this device", null);
+                return;
+            }
+
+            // Check for pending notification message
+            if (pendingNotificationMessage != null) {
+                JSONObject jsonMessage = new JSONObject(pendingNotificationMessage);
+                channel.invokeMethod("onMessageOpenedApp", jsonToMap(jsonMessage));
+                pendingNotificationMessage = null;
+            }
+
+            result.success(null);
+        } catch (Exception e) {
+            result.error("INIT_ERROR", "Error initializing ADM: " + e.getMessage(), null);
+        }
+    }
+
+    private boolean isSupported() {
+        try {
+            return adm.isSupported();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private String getAdmRegistrationId() {
+        try {
+            return adm.getRegistrationId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void startUnregister(Result result) {
+        try {
+            adm.startUnregister();
+            result.success(null);
+        } catch (Exception e) {
+            result.error("ERROR", "Error al desregistrar ADM", e.getMessage());
         }
     }
 

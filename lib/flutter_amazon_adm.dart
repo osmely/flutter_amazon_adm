@@ -20,4 +20,8 @@ class FlutterAmazonAdm {
       onRegistrationId: onRegistrationId,
     );
   }
+
+  Future<void> startUnregister() {
+    return FlutterAmazonAdmPlatform.instance.startUnregister();
+  }
 }
