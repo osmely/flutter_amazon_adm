@@ -36,37 +36,26 @@ public class AdmMessageHandlerJob extends ADMMessageHandlerJobBase {
 
     @Override
     protected void onMessage(final Context context, final Intent intent) {
-        try {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                Map<String, Object> message = new HashMap<>();
-                for (String key : extras.keySet()) {
-                    Object value = extras.get(key);
-                    if (value != null) {
-                        message.put(key, value);
-                    }
-                }
-
-                // If app is in foreground, send message directly
-                if (isAppInForeground()) {
-                    if (channel != null) {
-                        channel.invokeMethod("onMessage", message);
-                    }
-                } else {
-                    // If app is in background, show notification
-                    showNotification(FlutterAmazonAdmPlugin.context, message);
+        Log.d(TAG, "Message received");
+        
+        if (intent.getExtras() != null) {
+            Map<String, Object> message = new HashMap<>();
+            for (String key : intent.getExtras().keySet()) {
+                Object value = intent.getExtras().get(key);
+                if (value != null) {
+                    message.put(key, value);
                 }
             }
-        } catch (Exception e) {
-            Log.e(TAG, "Error processing ADM message", e);
-        }
-    }
-
-    @Override
-    protected void onRegistrationError(final Context context, final String string) {
-        Log.e(TAG, "Registration error: " + string);
-        if (channel != null) {
-            channel.invokeMethod("onRegistrationError", string);
+            
+            // If app is in foreground, send message directly
+            if (isAppInForeground()) {
+                if (channel != null) {
+                    channel.invokeMethod("onMessage", message);
+                }
+            } else {
+                // If app is in background, show notification
+                showNotification(FlutterAmazonAdmPlugin.context, message);
+            }
         }
     }
 
@@ -83,6 +72,14 @@ public class AdmMessageHandlerJob extends ADMMessageHandlerJobBase {
         Log.d(TAG, "Device unregistered with ID: " + registrationId);
         if (channel != null) {
             channel.invokeMethod("onUnregistered", registrationId);
+        }
+    }
+
+    @Override
+    protected void onRegistrationError(final Context context, final String string) {
+        Log.e(TAG, "Registration error: " + string);
+        if (channel != null) {
+            channel.invokeMethod("onRegistrationError", string);
         }
     }
 
