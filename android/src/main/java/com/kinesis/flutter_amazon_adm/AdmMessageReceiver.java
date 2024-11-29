@@ -10,6 +10,9 @@ public class AdmMessageReceiver extends ADMMessageReceiver {
 
     public AdmMessageReceiver() {
         super(AdmMessageHandler.class);
-        registerJobServiceClass(AdmMessageHandler.class, 434534);
+        registerJobServiceClass(AdmMessageHandlerJob.class, 434534);
     }
+
 }
+
+
