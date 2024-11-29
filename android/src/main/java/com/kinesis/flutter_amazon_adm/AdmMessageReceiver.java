@@ -11,7 +11,7 @@ public class AdmMessageReceiver extends ADMMessageReceiver {
     public AdmMessageReceiver() {
         super(AdmMessageHandler.class);
 
-        Log.d("AdmMessageReceiver", ":::::::::::::::");
+        Log.d("AdmMessageReceiver ::: ", ":::::::::::::::");
 
         registerJobServiceClass(AdmMessageHandlerJob.class, 434534);
     }
