@@ -52,6 +52,12 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
+    protected void onRegistrationError(final String string)
+    {
+        Log.e(TAG, "PluginADMMessageHandler:onRegistrationError " + string);
+    }
+
+    @Override
     protected void onMessage(final Intent intent) {
         Log.d(TAG, "Message received");
         
