@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amazon="http://schemas.amazon.com/apk/res/android"
+    package="com.kinesis.flutter_adm">
+
+    <!-- Permisos necesarios para ADM -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
+
+    <!-- Permiso personalizado para recibir mensajes ADM -->
+    <permission
+        android:name="${applicationId}.permission.RECEIVE_ADM_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.RECEIVE_ADM_MESSAGE" />
+
+    <application>
+        <!-- Habilitar ADM -->
+        <amazon:enable-feature
+            android:name="com.amazon.device.messaging"
+            android:required="false" />
+
+        <!-- ADM Message Handler Service -->
+        <service
+            android:name=".AdmMessageHandler"
+            android:exported="false" />
+
+        <!-- Actividad para manejar notificaciones -->
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false"
+            android:theme="@style/LaunchTheme"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+        </activity>
+
+
+        <!-- ADM Message Handler Receiver -->
+        <receiver
+            android:name=".AdmMessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
+                <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Metadatos necesarios -->
+        <meta-data
+            android:name="com.amazon.device.messaging.ADMEnabled"
+            android:value="true" />
+    </application>
+</manifest>
