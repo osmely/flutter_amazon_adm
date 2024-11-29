@@ -17,5 +17,3 @@ public class AdmMessageReceiver extends ADMMessageReceiver {
     }
 
 }
-
-
