@@ -71,13 +71,13 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
             }
             
             // If app is in foreground, send message directly
-            if (isAppInForeground(context)) {
+            if (isAppInForeground()) {
                 if (channel != null) {
                     channel.invokeMethod("onMessage", message);
                 }
             } else {
                 // If app is in background, show notification
-                showNotification(context, message);
+                showNotification(getContext(), message);
             }
         }
     }
@@ -87,7 +87,8 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
         Log.e(TAG, "Error: " + error);
     }
 
-    private boolean isAppInForeground(Context context) {
+    private boolean isAppInForeground() {
+        Context context = getContext();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager == null) return false;
 
