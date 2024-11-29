@@ -1,7 +1,7 @@
 name: flutter_amazon_adm
 description: A Flutter plugin for Amazon Device Messaging (ADM) push notifications
 version: 0.0.1
-homepage: https://github.com/yourusername/flutter_amazon_adm
+homepage: https://github.com/osmely/flutter_amazon_adm
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -21,5 +21,5 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.flutter_amazon_adm
+        package: com.kinesis.flutter_amazon_adm
         pluginClass: FlutterAmazonAdmPlugin
