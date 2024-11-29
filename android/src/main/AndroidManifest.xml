@@ -50,7 +50,9 @@
         <!-- ADM Message Handler Receiver -->
         <receiver
             android:name=".AdmMessageReceiver"
-            android:exported="false">
+            android:exported="true"
+            android:permission="com.amazon.device.messaging.permission.SEND">
+            
             <intent-filter>
                 <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
                 <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
