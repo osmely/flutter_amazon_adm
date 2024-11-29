@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat;
 import com.amazon.device.messaging.ADMMessageHandlerJobBase;
 
 import org.json.JSONObject;
-
+import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
