@@ -82,11 +82,6 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
         }
     }
 
-    @Override
-    protected void onError(final Context context, final String error) {
-        Log.e(TAG, "Error: " + error);
-    }
-
     private boolean isAppInForeground() {
         Context context = FlutterAmazonAdmPlugin.context;
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
