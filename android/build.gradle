@@ -1,4 +1,4 @@
-group 'com.example.flutter_amazon_adm'
+group 'com.kinesis.flutter_adm'
 version '1.0'
 
 buildscript {
@@ -32,6 +32,11 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 33
+        
+        // Configuración del plugin
+        manifestPlaceholders = [
+            'applicationId': 'com.kinesis.flutter_adm'
+        ]
     }
 
     dependencies {
