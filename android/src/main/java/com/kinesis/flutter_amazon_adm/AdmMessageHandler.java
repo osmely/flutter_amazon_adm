@@ -36,7 +36,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onRegistered(final Context context, final String registrationId){
+    protected void onRegistered(final Context context, final String registrationId) {
         Log.d(TAG, "Device registered: " + registrationId);
         if (channel != null) {
             channel.invokeMethod("onRegistrationId", registrationId);
@@ -44,12 +44,15 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onUnregistered(final Context context, final String registrationId){
+    protected void onUnregistered(final Context context) {
         Log.d(TAG, "Device unregistered");
+        if (channel != null) {
+            channel.invokeMethod("onUnregistered", null);
+        }
     }
 
     @Override
-    protected void onMessage(final Context context, final Intent intent){
+    protected void onMessage(final Context context, final Intent intent) {
         Log.d(TAG, "Message received");
         
         if (intent.getExtras() != null) {
@@ -73,10 +76,9 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
         }
     }
 
-
     @Override
-    protected void onRegistrationError(final Context context, final String string){
-        Log.e(TAG, "Error: " + string);
+    protected void onError(final Context context, final String error) {
+        Log.e(TAG, "Error: " + error);
     }
 
     private boolean isAppInForeground(Context context) {
