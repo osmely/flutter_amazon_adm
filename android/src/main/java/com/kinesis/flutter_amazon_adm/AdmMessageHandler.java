@@ -7,11 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.amazon.device.messaging.ADMMessageHandlerBase;
+import com.amazon.device.messaging.ADMMessageHandlerJobBase;
 
 import org.json.JSONObject;
 
@@ -21,7 +20,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public class AdmMessageHandler extends ADMMessageHandlerBase {
+public class AdmMessageHandler extends ADMMessageHandlerJobBase {
     private static final String TAG = "AdmMessageHandler";
     private static final String NOTIFICATION_CHANNEL_ID = "adm_notifications";
     private static final int NOTIFICATION_ID = 1;
@@ -36,30 +35,8 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     @Override
-    protected void onRegistered(final String registrationId) {
-        Log.d(TAG, "Device registered: " + registrationId);
-        if (channel != null) {
-            channel.invokeMethod("onRegistrationId", registrationId);
-        }
-    }
-
-    @Override
-    protected void onUnregistered(final String registrationId) {
-        Log.d(TAG, "Device unregistered");
-        if (channel != null) {
-            channel.invokeMethod("onUnregistered", null);
-        }
-    }
-
-    @Override
-    protected void onRegistrationError(final String string)
-    {
-        Log.e(TAG, "PluginADMMessageHandler:onRegistrationError " + string);
-    }
-
-    @Override
-    protected void onMessage(final Intent intent) {
-        Log.d(TAG, "Message received");
+    protected void onJobMessage(Intent intent, int jobId) {
+        Log.d(TAG, "Message received with jobId: " + jobId);
         
         if (intent.getExtras() != null) {
             Map<String, Object> message = new HashMap<>();
@@ -79,6 +56,30 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
                 // If app is in background, show notification
                 showNotification(FlutterAmazonAdmPlugin.context, message);
             }
+        }
+    }
+
+    @Override
+    protected void onJobRegistered(String registrationId, int jobId) {
+        Log.d(TAG, "Device registered with ID: " + registrationId);
+        if (channel != null) {
+            channel.invokeMethod("onRegistered", registrationId);
+        }
+    }
+
+    @Override
+    protected void onJobUnregistered(String registrationId, int jobId) {
+        Log.d(TAG, "Device unregistered with ID: " + registrationId);
+        if (channel != null) {
+            channel.invokeMethod("onUnregistered", registrationId);
+        }
+    }
+
+    @Override
+    protected void onJobRegistrationError(String error, int jobId) {
+        Log.e(TAG, "Registration error: " + error);
+        if (channel != null) {
+            channel.invokeMethod("onRegistrationError", error);
         }
     }
 
