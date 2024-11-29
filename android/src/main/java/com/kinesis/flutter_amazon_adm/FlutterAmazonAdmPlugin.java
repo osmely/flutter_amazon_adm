@@ -21,7 +21,7 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
     private static String pendingNotificationMessage;
 
     private MethodChannel channel;
-    private Context context;
+    static Context context;
     private ADM adm;
 
     public static void handleNotificationOpen(String message) {
@@ -42,8 +42,8 @@ public class FlutterAmazonAdmPlugin implements FlutterPlugin, MethodCallHandler,
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_amazon_adm");
         methodChannel = channel;
         channel.setMethodCallHandler(this);
-        context = flutterPluginBinding.getApplicationContext();
-        adm = new ADM(context);
+        FlutterAmazonAdmPlugin.context = flutterPluginBinding.getApplicationContext();
+        adm = new ADM(FlutterAmazonAdmPlugin.context);
         AdmMessageHandler.setChannel(channel);
     }
 

@@ -77,7 +77,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
                 }
             } else {
                 // If app is in background, show notification
-                showNotification(getContext(), message);
+                showNotification(FlutterAmazonAdmPlugin.context, message);
             }
         }
     }
@@ -88,7 +88,7 @@ public class AdmMessageHandler extends ADMMessageHandlerBase {
     }
 
     private boolean isAppInForeground() {
-        Context context = getContext();
+        Context context = FlutterAmazonAdmPlugin.context;
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager == null) return false;
 
